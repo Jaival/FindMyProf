@@ -26,6 +26,7 @@ public class StudentDashboard extends AppCompatActivity {
 
         getSupportFragmentManager().beginTransaction().replace(R.id.frame, new HomeStudentFragment()).commit();
 
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
