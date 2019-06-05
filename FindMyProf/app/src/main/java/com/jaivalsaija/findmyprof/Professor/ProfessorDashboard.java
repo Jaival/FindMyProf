@@ -1,53 +1,69 @@
 package com.jaivalsaija.findmyprof.Professor;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.view.MenuItem;
+import android.view.View;
 
 import com.jaivalsaija.findmyprof.R;
-
-import java.util.Objects;
+import com.jaivalsaija.findmyprof.utils.ViewAnimation;
 
 
 public class ProfessorDashboard extends AppCompatActivity {
 
-    BottomNavigationView btmNavigation;
+    FloatingActionButton open, home, notify, history;
+    private boolean rotate = false;
+    Intent intentNotify, intentHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_professor_dashboard);
 
-        btmNavigation = findViewById(R.id.btm_nav);
-        btmNavigation.setOnNavigationItemSelectedListener(navListener);
+        open = findViewById(R.id.fabOpen);
+        home = findViewById(R.id.fabHome);
+        history = findViewById(R.id.fabHistory);
+        notify = findViewById(R.id.fabMore);
+        ViewAnimation.initShowOut(home);
+        ViewAnimation.initShowOut(history);
+        ViewAnimation.initShowOut(notify);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame, new HomeProfessorFragment()).commit();
+        intentHistory = new Intent(this, HistoryProfessor.class);
+        intentNotify = new Intent(this, NotifyProfessor.class);
+
+
+        open.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                rotate = ViewAnimation.rotateFab(v, !rotate);
+                if (rotate) {
+                    ViewAnimation.showIn(home);
+                    ViewAnimation.showIn(history);
+                    ViewAnimation.showIn(notify);
+                } else {
+                    ViewAnimation.showOut(home);
+                    ViewAnimation.showOut(history);
+                    ViewAnimation.showOut(notify);
+                }
+            }
+        });
+
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentHistory);
+            }
+        });
+
+        notify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(intentNotify);
+            }
+        });
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
 
-            Fragment selectedFragment = null;
-
-            switch (menuItem.getItemId()) {
-                case R.id.home:
-                    selectedFragment = new HomeProfessorFragment();
-                    break;
-                case R.id.notify:
-                    selectedFragment = new NotifyProfessorFragment();
-                    break;
-                case R.id.history:
-                    selectedFragment = new HistoryProfessorFragment();
-                    break;
-            }
-            getSupportFragmentManager().beginTransaction().replace(R.id.frame, Objects.requireNonNull(selectedFragment)).commit();
-
-            return true;
-        }
-    };
 
 }

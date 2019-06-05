@@ -1,4 +1,15 @@
 <resources>
     <string name="app_name">FindMyProf</string>
     <string name="request">Request</string>
+    <string name="log_in">Log In</string>
+    <string name="user_id">User Id</string>
+    <string name="password">Password</string>
+    <string name="time">Time</string>
+    <string name="start">Start</string>
+    <string name="end">End</string>
+    <string name="avaliable">Avaliable</string>
+    <string name="cancel">Cancel</string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="response">Response</string>
 </resources>

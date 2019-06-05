@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/spacing_middle"
-                android:text="Log In"
+                android:text="@string/log_in"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@android:color/white"
                 android:textStyle="bold" />
@@ -45,9 +45,10 @@
 
             <Spinner
                 android:id="@+id/spinner"
+                style="@android:style/Widget.Material.Spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:theme="@style/EditText.White"/>
+                android:theme="@style/EditText.Blue" />
 
             <View
                 android:layout_width="0dp"
@@ -63,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"
                     android:layout_marginRight="-4dp"
-                    android:hint="Username"
+                    android:hint="@string/user_id"
                     android:inputType="text"
                     android:maxLength="50"
                     android:maxLines="1"
@@ -122,7 +123,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-4dp"
                     android:layout_marginRight="-4dp"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:inputType="textPassword"
                     android:maxLength="50"
                     android:maxLines="1"
@@ -190,8 +191,8 @@
                     app:fabSize="normal"
                     app:rippleColor="@color/cyan_800"
                     app:srcCompat="@drawable/ic_arrow_right"
-                    android:focusable="true" />
-
+                    android:focusable="true"
+                    android:layout_marginBottom="5dp" />
 
                 <ProgressBar
                     android:id="@+id/progress_bar"

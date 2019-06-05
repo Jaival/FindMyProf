@@ -9,7 +9,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Professor.ProfessorDashboard"></activity>
+        <activity android:name=".Professor.HistoryProfessor"></activity>
+        <activity android:name=".Professor.NotifyProfessor" />
+        <activity android:name=".Student.HistoryStudent" />
+        <activity android:name=".Student.NotifyStudent" />
+        <activity android:name=".Student.Request" />
+        <activity android:name=".Professor.ProfessorDashboard" />
         <activity android:name=".Student.StudentDashboard" />
         <activity android:name=".MainActivity">
             <intent-filter>

@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="colorPrimary">#262938</color>
-    <color name="colorPrimaryDark">#181A24</color>
-    <color name="colorAccent">#181A24</color>
-
-<!--    <color name="colorPrimary">#1976D2</color>-->
-<!--    <color name="colorPrimaryDark">#1565C0</color>-->
-    <color name="colorPrimaryLight">#1E88E5</color>
-<!--    <color name="colorAccent">#FF4081</color>-->
-    <color name="colorAccentDark">#F50057</color>
-    <color name="colorAccentLight">#FF80AB</color>
+    <!--    Spanish Blue-->
+    <color name="colorPrimary">#0370B7</color>
+    <!--    Bracing Blue-->
+    <color name="colorPrimaryDark">#004682</color>
+    <!--    Tomb Blue-->
+    <color name="colorAccent">#0295CE</color>
+    <!--    Exquisite Turquoise-->
+    <color name="colorPrimaryLight">#07D1BF</color>
+    <!--    Thallium Flame-->
+    <color name="colorAccentLight">#60F4A0</color>
+    <color name="midnighthour">#3C494F</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="overlay_dark_10">#1A000000</color>
     <color name="overlay_dark_20">#33000000</color>
