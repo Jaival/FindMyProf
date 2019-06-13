@@ -13,8 +13,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.jaivalsaija.findmyprof.ListData;
 import com.jaivalsaija.findmyprof.R;
+import com.jaivalsaija.findmyprof.data.ListData;
 
 public class NotifyProfessor extends AppCompatActivity {
     RecyclerView recyclerView;
@@ -105,5 +105,4 @@ public class NotifyProfessor extends AppCompatActivity {
             this.reject = itemView.findViewById(R.id.btnReject);
         }
     }
-
 }

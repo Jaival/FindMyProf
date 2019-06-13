@@ -51,7 +51,7 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_margin="5dp"
+                            android:layout_margin="7dp"
                             android:autofillHints=""
                             android:ems="10"
                             android:hint="@string/start"
@@ -61,40 +61,13 @@
                             android:id="@+id/editTimeEnd"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
+                            android:layout_gravity="end"
                             android:autofillHints=""
                             android:ems="10"
                             android:hint="@string/end"
                             android:inputType="time" />
 
-                        <android.support.design.widget.FloatingActionButton
-                            android:id="@+id/fab"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|end"
-                            android:layout_margin="16dp"
-                            android:background="@color/white"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:src="@drawable/ic_check_blue_24dp"
-                            app:backgroundTint="@color/white"
-                            app:borderWidth="0dp"
-                            app:elevation="0dp"
-                            app:fabSize="normal"
-                            app:rippleColor="@color/colorAccentLight" />
                     </LinearLayout>
-
-                    <!--                <TextView-->
-                    <!--                    android:id="@+id/textView"-->
-                    <!--                    android:layout_width="wrap_content"-->
-                    <!--                    android:layout_height="wrap_content"-->
-                    <!--                    android:layout_gravity="center|start"-->
-                    <!--                    android:layout_marginStart="5dp"-->
-                    <!--                    android:text="@string/time"-->
-                    <!--                    android:textColor="@android:color/black"-->
-                    <!--                    android:textSize="24sp" />-->
-
 
                     <View
                         android:layout_width="match_parent"
@@ -106,16 +79,6 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
-
-                    <!--                <TextView-->
-                    <!--                    android:id="@+id/textView2"-->
-                    <!--                    android:layout_width="wrap_content"-->
-                    <!--                    android:layout_height="wrap_content"-->
-                    <!--                    android:layout_gravity="center|start"-->
-                    <!--                    android:layout_marginStart="5dp"-->
-                    <!--                    android:text="@string/time"-->
-                    <!--                    android:textColor="@android:color/black"-->
-                    <!--                    android:textSize="24sp" />-->
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -127,7 +90,7 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_margin="5dp"
+                            android:layout_margin="7dp"
                             android:autofillHints=""
                             android:ems="10"
                             android:hint="@string/start"
@@ -137,29 +100,28 @@
                             android:id="@+id/editTimeEnd2"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
+                            android:layout_gravity="end"
                             android:autofillHints=""
                             android:ems="10"
                             android:hint="@string/end"
                             android:inputType="time" />
 
-                        <android.support.design.widget.FloatingActionButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|end"
-                            android:layout_margin="16dp"
-                            android:background="@color/white"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:src="@drawable/ic_check_blue_24dp"
-                            app:backgroundTint="@color/white"
-                            app:borderWidth="0dp"
-                            app:elevation="0dp"
-                            app:fabSize="normal"
-                            app:rippleColor="@color/colorAccentLight" />
+                        <!--                        <android.support.design.widget.FloatingActionButton-->
+                        <!--                            android:id="@+id/Done1"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_gravity="center|end"-->
+                        <!--                            android:layout_margin="16dp"-->
+                        <!--                            android:background="@color/white"-->
+                        <!--                            android:clickable="true"-->
+                        <!--                            android:focusable="true"-->
+                        <!--                            android:src="@drawable/ic_check_blue_24dp"-->
+                        <!--                            app:backgroundTint="@color/white"-->
+                        <!--                            app:borderWidth="0dp"-->
+                        <!--                            app:elevation="0dp"-->
+                        <!--                            app:fabSize="normal"-->
+                        <!--                            app:rippleColor="@color/colorAccentLight" />-->
                     </LinearLayout>
-
 
                     <View
                         android:layout_width="match_parent"
@@ -172,16 +134,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <!--                <TextView-->
-                    <!--                    android:id="@+id/textView3"-->
-                    <!--                    android:layout_width="wrap_content"-->
-                    <!--                    android:layout_height="wrap_content"-->
-                    <!--                    android:layout_gravity="center|start"-->
-                    <!--                    android:layout_marginStart="5dp"-->
-                    <!--                    android:text="@string/time"-->
-                    <!--                    android:textColor="@android:color/black"-->
-                    <!--                    android:textSize="24sp" />-->
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -192,7 +144,7 @@
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_margin="5dp"
+                            android:layout_margin="7dp"
                             android:autofillHints=""
                             android:ems="10"
                             android:hint="@string/start"
@@ -202,29 +154,28 @@
                             android:id="@+id/editTimeEnd3"
                             android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_margin="5dp"
+                            android:layout_gravity="end"
                             android:autofillHints=""
                             android:ems="10"
                             android:hint="@string/end"
                             android:inputType="time" />
 
-                        <android.support.design.widget.FloatingActionButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center|end"
-                            android:layout_margin="16dp"
-                            android:background="@color/white"
-                            android:clickable="true"
-                            android:focusable="true"
-                            android:src="@drawable/ic_check_blue_24dp"
-                            app:backgroundTint="@color/white"
-                            app:borderWidth="0dp"
-                            app:elevation="0dp"
-                            app:fabSize="normal"
-                            app:rippleColor="@color/colorAccentLight" />
+                        <!--                        <android.support.design.widget.FloatingActionButton-->
+                        <!--                            android:id="@+id/Done2"-->
+                        <!--                            android:layout_width="wrap_content"-->
+                        <!--                            android:layout_height="wrap_content"-->
+                        <!--                            android:layout_gravity="center|end"-->
+                        <!--                            android:layout_margin="16dp"-->
+                        <!--                            android:background="@color/white"-->
+                        <!--                            android:clickable="true"-->
+                        <!--                            android:focusable="true"-->
+                        <!--                            android:src="@drawable/ic_check_blue_24dp"-->
+                        <!--                            app:backgroundTint="@color/white"-->
+                        <!--                            app:borderWidth="0dp"-->
+                        <!--                            app:elevation="0dp"-->
+                        <!--                            app:fabSize="normal"-->
+                        <!--                            app:rippleColor="@color/colorAccentLight" />-->
                     </LinearLayout>
-
 
                     <View
                         android:layout_width="match_parent"
@@ -232,7 +183,25 @@
                         android:layout_gravity="bottom"
                         android:background="@color/colorPrimaryDark" />
                 </android.support.v7.widget.CardView>
+
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/Done"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="16dp"
+                    android:background="@color/white"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_check_blue_24dp"
+                    app:backgroundTint="@color/white"
+                    app:borderWidth="0dp"
+                    app:elevation="0dp"
+                    app:fabSize="normal"
+                    app:rippleColor="@color/colorAccentLight" />
+
             </LinearLayout>
+
         </android.support.v4.widget.NestedScrollView>
 
         <android.support.v7.widget.CardView
@@ -245,7 +214,7 @@
                 android:layout_width="200dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
-                android:text="@string/avaliable"
+                android:text="@string/available"
                 android:textSize="24sp" />
         </android.support.v7.widget.CardView>
 
@@ -303,32 +272,5 @@
         </LinearLayout>
 
     </FrameLayout>
-
-    <!--    <android.support.design.widget.FloatingActionButton-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="bottom|end"-->
-    <!--        android:layout_margin="16dp"-->
-    <!--        android:clickable="true"-->
-    <!--        android:focusable="true"-->
-    <!--        android:src="@drawable/ic_add_black_24dp"-->
-    <!--        app:backgroundTint="@color/colorPrimary"-->
-    <!--        app:rippleColor="@color/colorAccentLight" />-->
-    <!--    <FrameLayout-->
-    <!--        android:id="@+id/frame"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_above="@id/btm_nav" >-->
-
-
-    <!--    </FrameLayout>-->
-
-    <!--    <android.support.design.widget.BottomNavigationView-->
-    <!--        android:id="@+id/btm_nav"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        app:menu="@menu/bottom_navigation_student"-->
-    <!--        android:background="?android:attr/windowBackground" />-->
 
 </RelativeLayout>

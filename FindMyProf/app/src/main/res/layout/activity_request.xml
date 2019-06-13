@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".Student.Request">
+    tools:context=".Student.RequestProf">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -46,7 +46,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/editTimeStart"
+                            android:id="@+id/textTimeStart"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -55,7 +55,7 @@
                             android:hint="@string/start" />
 
                         <TextView
-                            android:id="@+id/editTimeEnd"
+                            android:id="@+id/textTimeEnd"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -98,7 +98,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/editTimeStart2"
+                            android:id="@+id/textTimeStart1"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -107,13 +107,14 @@
                             android:hint="@string/start" />
 
                         <TextView
-                            android:id="@+id/editTimeEnd2"
+                            android:id="@+id/textTimeEnd1"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:layout_margin="10dp"
                             android:ems="10"
                             android:hint="@string/end" />
+
 
                         <android.support.design.widget.FloatingActionButton
                             android:layout_width="wrap_content"
@@ -147,9 +148,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal">
-
                         <TextView
-                            android:id="@+id/editTimeStart3"
+                            android:id="@+id/textTimeStart2"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -158,7 +158,7 @@
                             android:hint="@string/start" />
 
                         <TextView
-                            android:id="@+id/editTimeEnd3"
+                            android:id="@+id/textTimeEnd2"
                             android:layout_width="80dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"

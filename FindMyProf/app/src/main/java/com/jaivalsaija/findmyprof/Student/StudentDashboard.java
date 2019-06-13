@@ -13,39 +13,82 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.jaivalsaija.findmyprof.ListData;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.jaivalsaija.findmyprof.R;
+import com.jaivalsaija.findmyprof.data.ConstantValue;
+import com.jaivalsaija.findmyprof.data.ProfessorData;
+import com.jaivalsaija.findmyprof.helper.RequestHandler;
+import com.jaivalsaija.findmyprof.helper.SharedPref;
 import com.jaivalsaija.findmyprof.utils.ViewAnimation;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class StudentDashboard extends AppCompatActivity {
     RecyclerView recyclerView;
     FloatingActionButton open, home, notify, history;
+    Intent intentNotify, intentHistory, intent;
+    List<ProfessorData> listData;
     private boolean rotate = false;
-    Intent intentNotify, intentHistory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
 
-        ListData[] listData = new ListData[]{
-                new ListData("A", "aa"),
-                new ListData("B", "bb"),
-                new ListData("C", "cc"),
-                new ListData("D", "dd"),
-                new ListData("E", "ee"),
-                new ListData("E", "ee"),
-                new ListData("E", "ee"),
-        };
+        listData = new ArrayList<>();
+
+        StringRequest stringProfdata = new StringRequest(
+                Request.Method.POST,
+                ConstantValue.Url_get_Prof,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            JSONArray array = jsonObject.getJSONArray("professor");
+
+                            for (int i = 0; i < array.length(); i++) {
+                                JSONObject prof = array.getJSONObject(i);
+                                ProfessorData data = new ProfessorData(
+                                        prof.getString("name"),
+                                        prof.getString("available"),
+                                        prof.getString("employee_id"));
+                                listData.add(data);
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                }
+        );
+        RequestHandler.getInstance(getApplicationContext()).addToRequestQueue(stringProfdata);
 
         recyclerView = findViewById(R.id.recycler);
         ListAdapter adapter = new ListAdapter(listData, getApplication());
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+
+        //loadRecyclerViewData();
 
         open = findViewById(R.id.fabOpen);
         home = findViewById(R.id.fabHome);
@@ -57,6 +100,7 @@ public class StudentDashboard extends AppCompatActivity {
 
         intentHistory = new Intent(this, HistoryStudent.class);
         intentNotify = new Intent(this, NotifyStudent.class);
+        intent = new Intent(getApplicationContext(), RequestProf.class);
 
         open.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,15 +134,16 @@ public class StudentDashboard extends AppCompatActivity {
 
     }
 
+//    private void loadRecyclerViewData() {
+//            }
+
     private class ListAdapter extends RecyclerView.Adapter<ViewHolder> {
 
-        private ListData[] listData;
-        private Context context;
-        Intent intent;
         ViewHolder viewHolder;
+        private List<ProfessorData> listData;
+        private Context context;
 
-        ListAdapter(ListData[] listData, Context context) {
-
+        public ListAdapter(List<ProfessorData> listData, Context context) {
             this.listData = listData;
             this.context = context;
         }
@@ -110,30 +155,29 @@ public class StudentDashboard extends AppCompatActivity {
             View listItem = layoutInflater.inflate(R.layout.recycler_student_dashboard, viewGroup, false);
             viewHolder = new ViewHolder(listItem) {
             };
-
             return viewHolder;
         }
 
         @Override
-        public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-            final ListData myListData = listData[position];
-            viewHolder.textProf.setText(listData[position].getProfName());
-            viewHolder.textAvailable.setText(listData[position].getDesc());
+        public void onBindViewHolder(@NonNull final ViewHolder viewHolder, final int position) {
+            final ProfessorData listItem = listData.get(position);
+//            final LauncherActivity.ListItem myListData = (List) listData.get(position);
+            viewHolder.textProf.setText(listData.get(position).getName());
+            viewHolder.textAvailable.setText(listData.get(position).getAvailable());
             viewHolder.btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    intent = new Intent(context.getApplicationContext(), Request.class);
-                    intent.putExtra("professor", myListData.getProfName());
-                    intent.putExtra("Desc", myListData.getDesc());
+                    SharedPref.getInstance(view.getContext()).setProfessor(listItem.getEmployeeId());
+//                    intent.putExtra("employeeId", listItem.getEmployeeId());
                     startActivity(intent);
-                    Toast.makeText(view.getContext(), "Click on item: " + myListData.getProfName(), Toast.LENGTH_LONG).show();
+//                    Toast.makeText(view.getContext(), "Click on item: " + listItem.getEmployeeId(), Toast.LENGTH_LONG).show();
                 }
             });
         }
 
         @Override
         public int getItemCount() {
-            return listData.length;
+            return listData.size();
         }
 
     }

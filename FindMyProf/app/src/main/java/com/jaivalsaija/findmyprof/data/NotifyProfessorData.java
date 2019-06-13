@@ -1,10 +1,10 @@
-package com.jaivalsaija.findmyprof;
+package com.jaivalsaija.findmyprof.data;
 
-public class ListData {
+public class NotifyProfessorData {
     private String profName;
     private String Desc;
 
-    public ListData(String profName, String Desc) {
+    public NotifyProfessorData(String profName, String Desc) {
         this.profName = profName;
         this.Desc = Desc;
     }
