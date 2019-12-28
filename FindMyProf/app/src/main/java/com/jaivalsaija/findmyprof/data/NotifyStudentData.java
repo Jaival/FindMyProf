@@ -1,28 +1,48 @@
 package com.jaivalsaija.findmyprof.data;
 
 public class NotifyStudentData {
-    private String profName;
-    private String Desc;
+    private String id;
+    private String studentName;
+    private String timeStart;
+    private String timeEnd;
 
-    public NotifyStudentData(String profName, String Desc) {
-        this.profName = profName;
-        this.Desc = Desc;
+    public NotifyStudentData(String id,String studentName, String timeStart, String timeEnd) {
+        this.id = id;
+        this.studentName = studentName;
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
     }
 
-    public String getProfName() {
-        return profName;
+    public String getId() {
+        return id;
     }
 
-    public void setProfName(String profName) {
-        this.profName = profName;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getDesc() {
-        return Desc;
+    public String getstudentName() {
+        return studentName;
     }
 
-    public void setDesc(String Desc) {
-        this.Desc = Desc;
+    public void setstudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getTimeStart() {
+        return timeStart;
+    }
+
+    public void setTimeStart(String timeStart) {
+        this.timeStart = timeStart;
+    }
+
+    public String getTimeEnd() {
+        return timeEnd;
+    }
+
+    public void setTimeEnd(String timeEnd) {
+        this.timeEnd = timeEnd;
     }
 }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -30,10 +31,64 @@
             android:fillViewport="true">
 
             <android.support.v7.widget.RecyclerView
-                android:id="@+id/notifyRecycler"
+                android:id="@+id/notifyProfessor"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+
         </android.support.v4.widget.NestedScrollView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:orientation="vertical">
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabHistory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_history_black_24dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:layout_marginBottom="5dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_notify_black_24dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                app:fabSize="mini"
+                app:srcCompat="@drawable/ic_home_black_24dp" />
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fabOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:fabSize="normal"
+                app:rippleColor="@color/cyan_800"
+                app:srcCompat="@drawable/ic_expand_less_black_24dp" />
+        </LinearLayout>
     </FrameLayout>
 
 </RelativeLayout>

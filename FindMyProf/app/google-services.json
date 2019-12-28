@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_number": "491514437140",
+    "firebase_url": "https://findmyprof.firebaseio.com",
+    "project_id": "findmyprof",
+    "storage_bucket": "findmyprof.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:491514437140:android:fe8041048f6246fc",
+        "android_client_info": {
+          "package_name": "com.jaivalsaija.findmyprof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "491514437140-gmi8rj3putphls30c1ob7g4b24lqmjkv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jaivalsaija.findmyprof",
+            "certificate_hash": "ac77a305657daedb6ce151aa86c1a54e3dc38a56"
+          }
+        },
+        {
+          "client_id": "491514437140-hgp88qkk5tb53ec40r40bveeqeilqo41.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jaivalsaija.findmyprof",
+            "certificate_hash": "f82856d8e058e2632e2ff4140cd5f28e0b674ec4"
+          }
+        },
+        {
+          "client_id": "491514437140-iogph4i4k4jlgu7p0ij1e43qs3h9pbu5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUkNIsX0Sy0znBKlPo3FuQS21MJzj8HPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "491514437140-iogph4i4k4jlgu7p0ij1e43qs3h9pbu5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

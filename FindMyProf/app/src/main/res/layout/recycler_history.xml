@@ -19,11 +19,22 @@
             android:textSize="22sp" />
 
         <TextView
-            android:id="@+id/textTime"
+            android:id="@+id/textTimeStart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="42dp"
+            android:text="@string/time"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/textTimeEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="90dp"
             android:layout_marginTop="42dp"
             android:text="@string/time"
             android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"

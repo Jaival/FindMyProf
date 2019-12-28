@@ -45,11 +45,13 @@ public class ChangePassword extends AppCompatActivity {
                     type = thisIntent.getStringExtra("type");
                     if (type.equals("Professor")) {
                         uname = thisIntent.getStringExtra("employee_id");
-                        pass = confirmpassword.getText().toString();
+                        Toast.makeText(getApplicationContext(), uname, Toast.LENGTH_LONG).show();
+                        pass = password.getText().toString();
                         changeProfessorPassword(uname, pass);
                     } else if (type.equals("Student")) {
                         uname = thisIntent.getStringExtra("enrollment_no");
-                        pass = confirmpassword.getText().toString();
+                        Toast.makeText(getApplicationContext(), uname, Toast.LENGTH_LONG).show();
+                        pass = password.getText().toString();
                         changeStudentPassword(uname, pass);
                     }
                 } else {
@@ -63,13 +65,16 @@ public class ChangePassword extends AppCompatActivity {
         });
     }
 
-    private void changeStudentPassword(final String usrname, final String password) {
+    private void changeStudentPassword(final String username, final String password) {
         StringRequest stringChangeStudentPassword = new StringRequest(
                 Request.Method.POST,
                 ConstantValue.Url_Change_Student_Password,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(),
+                                "Working",
+                                Toast.LENGTH_LONG).show();
                         startActivity(gotoMain);
                         finish();
                     }
@@ -79,6 +84,9 @@ public class ChangePassword extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 //                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),
+                                "Error",
+                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),
                                 error.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
@@ -87,7 +95,7 @@ public class ChangePassword extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
 
-                params.put("enrollment_no", usrname);
+                params.put("enrollment_no", username);
                 params.put("password", password);
 
                 return params;
@@ -96,13 +104,16 @@ public class ChangePassword extends AppCompatActivity {
         RequestHandler.getInstance(this).addToRequestQueue(stringChangeStudentPassword);
     }
 
-    private void changeProfessorPassword(final String usrname, final String password) {
-        StringRequest stringChangeStudentPassword = new StringRequest(
+    private void changeProfessorPassword(final String username, final String password) {
+        StringRequest stringChangeProfessorPassword = new StringRequest(
                 Request.Method.POST,
                 ConstantValue.Url_Change_Professor_Password,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(),
+                                "Working",
+                                Toast.LENGTH_LONG).show();
                         startActivity(gotoMain);
                         finish();
                     }
@@ -112,6 +123,9 @@ public class ChangePassword extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
 //                        progressDialog.dismiss();
                         Toast.makeText(getApplicationContext(),
+                                "Error",
+                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),
                                 error.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
@@ -120,13 +134,13 @@ public class ChangePassword extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
 
-                params.put("enrollment_no", usrname);
+                params.put("employee_id", username);
                 params.put("password", password);
 
                 return params;
             }
         };
-        RequestHandler.getInstance(this).addToRequestQueue(stringChangeStudentPassword);
+        RequestHandler.getInstance(this).addToRequestQueue(stringChangeProfessorPassword);
     }
 
 }

@@ -1,8 +1,8 @@
 package com.jaivalsaija.findmyprof;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,15 +14,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 import com.jaivalsaija.findmyprof.Professor.ProfessorDashboard;
 import com.jaivalsaija.findmyprof.Student.StudentDashboard;
 import com.jaivalsaija.findmyprof.data.ConstantValue;
@@ -34,7 +29,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,16 +37,30 @@ public class MainActivity extends AppCompatActivity {
     String[] value = {"Professor", "Student"};
     String sname;
     EditText userid, password;
-    private String studentToken, professorToken;
+    private ProgressDialog progressLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        intentStudent = new Intent(MainActivity.this, StudentDashboard.class);
-        intentProfessor = new Intent(MainActivity.this, ProfessorDashboard.class);
-        intentChangePassword = new Intent(MainActivity.this, ChangePassword.class);
+        if (SharedPref.getInstance(this).isStudentLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, StudentDashboard.class));
+            return;
+        }
+        if (SharedPref.getInstance(this).isProfessorLoggedIn()) {
+            finish();
+            startActivity(new Intent(this, ProfessorDashboard.class));
+            return;
+        }
+
+        progressLogin = new ProgressDialog(this);
+        progressLogin.setMessage("Logging In");
+
+        intentStudent = new Intent(getApplicationContext(), StudentDashboard.class);
+        intentProfessor = new Intent(getApplicationContext(), ProfessorDashboard.class);
+        intentChangePassword = new Intent(getApplicationContext(), ChangePassword.class);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         Spinner spinner = findViewById(R.id.spinner);
@@ -88,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     if (username.equals(pass)) {
                         intentChangePassword.putExtra("type", sname);
                         intentChangePassword.putExtra("employee_id", username);
+                        SharedPref.getInstance(getApplicationContext()).setProfessorid(username);
                         startActivity(intentChangePassword);
                     } else {
                         loginProfessor();
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     if (username.equals(pass)) {
                         intentChangePassword.putExtra("type", sname);
                         intentChangePassword.putExtra("enrollment_no", username);
+                        SharedPref.getInstance(getApplicationContext()).setProfessorid(username);
                         startActivity(intentChangePassword);
                     } else {
                         loginStudent();
@@ -106,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loginStudent() {
+        progressLogin.show();
 
         final String username = userid.getText().toString();
         final String pass = password.getText().toString();
@@ -116,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressLogin.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (!jsonObject.getBoolean("error")) {
@@ -123,11 +135,12 @@ public class MainActivity extends AppCompatActivity {
                                         userStudent(
                                                 jsonObject.getInt("id"),
                                                 jsonObject.getString("enrollment_no"),
-                                                jsonObject.getString("email"));
+                                                jsonObject.getString("email"),
+                                                jsonObject.getString("token"));
                                 startActivity(intentStudent);
                                 finish();
                             } else {
-                                Toast.makeText(MainActivity.this,
+                                Toast.makeText(getApplicationContext(),
                                         jsonObject.getString("message"),
                                         Toast.LENGTH_LONG).show();
                             }
@@ -139,14 +152,14 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this,
+                        progressLogin.hide();
+                        Toast.makeText(getApplicationContext(),
                                 error.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("enrollment_no", username);
@@ -156,71 +169,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         RequestHandler.getInstance(this).addToRequestQueue(stringStudent);
-        generateStudentToken();
-    }
-
-    public void generateStudentToken() {
-        final String username = userid.getText().toString();
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-                        // Get new Instance ID token
-                        studentToken = Objects.requireNonNull(task.getResult()).getToken();
-                        // Log and toast
-//                        msg = getString(R.string.msg_token_fmt, token);
-//                        Log.d(TAG, msg);
-                        //Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        StringRequest stringRegStuToken = new StringRequest(
-                Request.Method.POST,
-                ConstantValue.Url_Reg_Stud_Token,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (!jsonObject.getBoolean("error")) {
-                            } else {
-                                Toast.makeText(MainActivity.this,
-                                        jsonObject.getString("message"),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this,
-                                error.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("enrollment_no", username);
-                params.put("token", studentToken);
-
-                return params;
-            }
-        };
-        RequestHandler.getInstance(this).addToRequestQueue(stringRegStuToken);
+//        generateStudentToken();
     }
 
     private void loginProfessor() {
+        progressLogin.show();
 
         final String username = userid.getText().toString();
         final String pass = password.getText().toString();
@@ -231,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        progressLogin.dismiss();
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             if (!jsonObject.getBoolean("error")) {
@@ -238,11 +192,12 @@ public class MainActivity extends AppCompatActivity {
                                         userProfessor(
                                                 jsonObject.getInt("id"),
                                                 jsonObject.getString("employee_id"),
-                                                jsonObject.getString("email"));
+                                                jsonObject.getString("email"),
+                                                jsonObject.getString("token"));
                                 startActivity(intentProfessor);
                                 finish();
                             } else {
-                                Toast.makeText(MainActivity.this,
+                                Toast.makeText(getApplicationContext(),
                                         jsonObject.getString("message"),
                                         Toast.LENGTH_LONG).show();
                             }
@@ -254,14 +209,14 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this,
+                        progressLogin.hide();
+                        Toast.makeText(getApplicationContext(),
                                 error.getMessage(),
                                 Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
 
                 params.put("employee_id", username);
@@ -271,67 +226,126 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         RequestHandler.getInstance(this).addToRequestQueue(stringProfessor);
-        generateProfessorToken();
+//        generateProfessorToken();
     }
-
-    public void generateProfessorToken() {
-        final String username = userid.getText().toString();
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "getInstanceId failed", task.getException());
-                            return;
-                        }
-                        // Get new Instance ID token
-                        professorToken = Objects.requireNonNull(task.getResult()).getToken();
-                        // Log and toast
-//                        msg = getString("TOKEN", professorToken);
-                        Log.e(TAG, professorToken);
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        StringRequest stringRegProToken = new StringRequest(
-                Request.Method.POST,
-                ConstantValue.Url_Reg_Prof_Token,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            if (!jsonObject.getBoolean("error")) {
-                            } else {
-                                Toast.makeText(MainActivity.this,
-                                        jsonObject.getString("message"),
-                                        Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        progressDialog.dismiss();
-                        Toast.makeText(MainActivity.this,
-                                error.getMessage(),
-                                Toast.LENGTH_LONG).show();
-                    }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-
-                params.put("employee_id", username);
-                params.put("token", professorToken);
-
-                return params;
-            }
-        };
-        RequestHandler.getInstance(this).addToRequestQueue(stringRegProToken);
-    }
+//    public void generateProfessorToken() {
+//        final String username = userid.getText().toString();
+//
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.w(TAG, "getInstanceId failed", task.getException());
+//                            return;
+//                        }
+//                        // Get new Instance ID token
+//                        professorToken = Objects.requireNonNull(task.getResult()).getToken();
+//                        // Log and toast
+////                        msg = getString("TOKEN", professorToken);
+//                        Log.e(TAG, professorToken);
+////                        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//        StringRequest stringRegProToken = new StringRequest(
+//                Request.Method.POST,
+//                ConstantValue.Url_Reg_Prof_Token,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            if (!jsonObject.getBoolean("error")) {
+//                            } else {
+//                                Toast.makeText(getApplicationContext(),
+//                                        jsonObject.getString("message"),
+//                                        Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+////                        progressDialog.dismiss();
+//                        Toast.makeText(getApplicationContext(),
+//                                error.getMessage(),
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//
+//                params.put("employee_id", username);
+//                params.put("token", professorToken);
+//
+//                return params;
+//            }
+//        };
+//        RequestHandler.getInstance(this).addToRequestQueue(stringRegProToken);
+//    }
+//    public void generateStudentToken() {
+//        final String username = userid.getText().toString();
+//
+//        FirebaseInstanceId.getInstance().getInstanceId()
+//                .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+//                    @Override
+//                    public void onComplete(@NonNull Task<InstanceIdResult> task) {
+//                        if (!task.isSuccessful()) {
+//                            Log.w(TAG, "getInstanceId failed", task.getException());
+//                            return;
+//                        }
+//                        // Get new Instance ID token
+//                        studentToken = Objects.requireNonNull(task.getResult()).getToken();
+//                        // Log and toast
+////                        msg = getString(R.string.msg_token_fmt, token);
+////                        Log.d(TAG, msg);
+//                        //Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+//                    }
+//                });
+//
+//        StringRequest stringRegStuToken = new StringRequest(
+//                Request.Method.POST,
+//                ConstantValue.Url_Reg_Stud_Token,
+//                new Response.Listener<String>() {
+//                    @Override
+//                    public void onResponse(String response) {
+//                        try {
+//                            JSONObject jsonObject = new JSONObject(response);
+//                            if (!jsonObject.getBoolean("error")) {
+//                            } else {
+//                                Toast.makeText(getApplicationContext(),
+//                                        jsonObject.getString("message"),
+//                                        Toast.LENGTH_LONG).show();
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                },
+//                new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+////                        progressDialog.dismiss();
+//                        Toast.makeText(getApplicationContext(),
+//                                error.getMessage(),
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                }) {
+//            @Override
+//            protected Map<String, String> getParams() throws AuthFailureError {
+//                Map<String, String> params = new HashMap<>();
+//
+//                params.put("enrollment_no", username);
+//                params.put("token", studentToken);
+//
+//                return params;
+//            }
+//        };
+//        RequestHandler.getInstance(this).addToRequestQueue(stringRegStuToken);
+//    }
 }

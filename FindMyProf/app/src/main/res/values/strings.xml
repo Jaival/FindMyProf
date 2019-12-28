@@ -16,4 +16,5 @@
     <string name="name">Name</string>
     <string name="change_password">Change Password</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="logout">Logout</string>
 </resources>

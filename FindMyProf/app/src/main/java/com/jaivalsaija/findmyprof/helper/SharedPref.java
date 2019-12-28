@@ -1,5 +1,6 @@
 package com.jaivalsaija.findmyprof.helper;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 
@@ -11,21 +12,75 @@ public class SharedPref {
     private static final String Professor_Id = "ProfessorId";
     private static final String Professor_Enrollment = "ProfessorEnrollment";
     private static final String Professor_Email = "ProfessorEmail";
+    private static final String Student_Token = "StudentToken";
+    private static final String Professor_Token = "ProfessorToken";
     private static final String TYPE = "userType";
+    private static final String Student = "Student";
+    private static final String Professor = "Professor";
 
+    @SuppressLint("StaticFieldLeak")
     private static SharedPref instance;
-    private static Context ctx;
+    private Context ctx;
 
-    public SharedPref(Context context) {
+    private SharedPref(Context context) {
         ctx = context;
     }
-
 
     public static synchronized SharedPref getInstance(Context context) {
         if (instance == null) {
             instance = new SharedPref(context);
         }
         return instance;
+    }
+
+    public boolean setStudentid(String type) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(Student, type);
+
+        editor.apply();
+        return true;
+    }
+
+    public String getStudentid() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Student, null);
+    }
+
+    public boolean setStudentToken(String type) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(Student_Enrollment, type);
+
+        editor.apply();
+        return true;
+    }
+
+    public boolean setProfessorToken(String type) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(Professor_Enrollment, type);
+
+        editor.apply();
+        return true;
+    }
+
+    public boolean setProfessorid(String type) {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.putString(Professor, type);
+
+        editor.apply();
+        return true;
+    }
+
+    public String getProfessorid() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Professor, null);
     }
 
     public boolean userType(String type) {
@@ -43,25 +98,27 @@ public class SharedPref {
         return sharedPreferences.getString(TYPE, null);
     }
 
-    public boolean userStudent(int id, String enrollment, String email) {
+    public boolean userStudent(int id, String enrollment, String email, String token) {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(Student_Id, id);
         editor.putString(Student_Enrollment, enrollment);
         editor.putString(Student_Email, email);
+        editor.putString(Student_Token, token);
 
         editor.apply();
         return true;
     }
 
-    public boolean userProfessor(int id, String enrollment, String email) {
+    public boolean userProfessor(int id, String enrollment, String email, String token) {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putInt(Professor_Id, id);
         editor.putString(Professor_Enrollment, enrollment);
         editor.putString(Professor_Email, email);
+        editor.putString(Professor_Token, token);
 
         editor.apply();
         return true;
@@ -85,7 +142,6 @@ public class SharedPref {
 
         editor.clear();
         editor.apply();
-
 //        StringRequest stringProfessor = new StringRequest(
 //                RequestProf.Method.POST,
 //                ConstantValue.Url,
@@ -143,5 +199,15 @@ public class SharedPref {
     public String getProfessorStudent() {
         SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
         return sharedPreferences.getString(Professor_Enrollment, null);
+    }
+
+    public String getStudentToken() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Student_Token, null);
+    }
+
+    public String getProfessorToken() {
+        SharedPreferences sharedPreferences = ctx.getSharedPreferences(Shared_Pref_Name, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(Professor_Token, null);
     }
 }

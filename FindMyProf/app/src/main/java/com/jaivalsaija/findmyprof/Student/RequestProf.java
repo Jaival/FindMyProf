@@ -87,7 +87,9 @@ public class RequestProf extends AppCompatActivity {
 
     private void sendSinglePush(final String title, final String message, final String enrollment_no) {
 
-        StringRequest stringPushNotify = new StringRequest(Request.Method.POST, ConstantValue.Url_Prof_Send_Notif,
+        StringRequest stringPushNotify = new StringRequest(
+                Request.Method.POST,
+                ConstantValue.Url_Prof_Send_Notify,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
